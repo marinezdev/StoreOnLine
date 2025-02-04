@@ -15,7 +15,6 @@ export class CounterComponent {
     // NO ASYNC // before render // only once
     console.log('constructor');
     console.log('-'.repeat(15));
-
   }
 
   ngOnChanges(changes: SimpleChanges) 
@@ -24,6 +23,13 @@ export class CounterComponent {
     console.log('ngOnChange');
     console.log(changes);
     console.log('-'.repeat(15));
+
+    const duration = changes['duration'];
+    console.log(duration);
+    if (duration && (duration.currentValue != duration.previousValue))
+    {
+      this.doSomething();
+    }
   }
 
   ngOnInit() 
@@ -45,5 +51,11 @@ export class CounterComponent {
     // after render // si los componentes hijo ya fueron renderizados
     console.log('ngOnDestroy');
     console.log('-'.repeat(15));
+  }
+
+  doSomething() 
+  {
+    // async
+    console.log('duration changed to: ' + this.duration);
   }
 }
