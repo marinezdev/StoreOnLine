@@ -1,4 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, signal, SimpleChanges } from '@angular/core';
+import { windowTime } from 'rxjs';
 
 @Component({
   selector: 'app-counter',
@@ -9,6 +10,8 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 export class CounterComponent {
   @Input({required: true}) duration: number = 0;
   @Input({required: true}) message: string = ''; 
+  counter = signal(0);
+  counterRef: number | undefined;
 
   constructor() 
   {
@@ -37,6 +40,12 @@ export class CounterComponent {
     // after render // only once // async & tehn subscribe objects
     console.log('ngOnInit');
     console.log('-'.repeat(15));
+
+    // timer
+    this.counterRef = window.setInterval(() => {
+      this.counter.update(statePrev => statePrev + 1);
+      console.log('run interval: ' + this.counter);
+    }, 1000);
   }
 
   ngAfterViewInit()
@@ -51,6 +60,7 @@ export class CounterComponent {
     // after render // si los componentes hijo ya fueron renderizados
     console.log('ngOnDestroy');
     console.log('-'.repeat(15));
+    window.clearInterval(this.counterRef);
   }
 
   doSomething() 
