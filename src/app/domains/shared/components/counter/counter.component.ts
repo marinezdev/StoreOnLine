@@ -45,7 +45,7 @@ export class CounterComponent {
     this.counterRef = window.setInterval(() => {
       this.counter.update(statePrev => statePrev + 1);
       console.log('run interval: ' + this.counter);
-    }, 1000);
+    }, 30000);
   }
 
   ngAfterViewInit()
